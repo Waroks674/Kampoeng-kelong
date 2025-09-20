@@ -1,10 +1,136 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <title>Toko Kelontong Kami</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Menu Kami</title>
+  <style>
+    :root {
+      --primary: #222;
+      --bg: #f9f9f9;
+      --accent: #e63946;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--primary);
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 0;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .menu-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: transform 0.2s;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .menu-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .menu-info {
+      padding: 20px;
+    }
+
+    .menu-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .menu-price {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 80px;
+      color: #999;
+    }
+  </style>
 </head>
 <body>
-  <h1>Selamat datang di Toko Kelontong!</h1>
-  <p>Website ini akan segera hadir.</p>
+  <div class="container">
+    <header>
+      <h1>🍽️ Menu Kami</h1>
+    </header>
+
+    <div id="menu-container" class="menu-grid">
+      <div class="loading">Loading menu...</div>
+    </div>
+  </div>
+
+  <script>
+    // GANTI DENGAN URL WEB APP KAMU!
+    const SHEET_URL = 'https://script.google.com/macros/s/ABC123DEF456/exec';
+
+    async function loadMenu() {
+      const container = document.getElementById('menu-container');
+
+      try {
+        const response = await fetch(SHEET_URL);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        const data = await response.json();
+        container.innerHTML = '';
+
+        if (!data || data.length === 0) {
+          container.innerHTML = '<p style="text-align:center; padding:40px;">Belum ada menu.</p>';
+          return;
+        }
+
+        data.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'menu-card';
+          card.innerHTML = `
+            <img src="${item['Gambar (URL)'] || 'https://via.placeholder.com/300x200?text=No+Image'}" alt="${item['Nama Menu']}">
+            <div class="menu-info">
+              <h3 class="menu-name">${item['Nama Menu']}</h3>
+              <p class="menu-price">Rp ${Number(item['Harga']).toLocaleString('id-ID')}</p>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+
+      } catch (error) {
+        console.error("Error:", error);
+        container.innerHTML = `<p style="text-align:center; color:red; padding:40px;">❌ Gagal memuat menu: ${error.message}</p>`;
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', loadMenu);
+  </script>
 </body>
 </html>
