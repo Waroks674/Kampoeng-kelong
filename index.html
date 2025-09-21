@@ -114,6 +114,14 @@
       font-weight: 700;
       margin: 24px 0 16px;
       color: var(--text);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pagination {
+      font-size: 0.9rem;
+      color: #999;
     }
 
     .product-grid {
@@ -142,18 +150,6 @@
       height: 200px;
       object-fit: cover;
       display: block;
-    }
-
-    .product-badge {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: var(--gold);
-      color: var(--text);
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-weight: 600;
-      font-size: 0.8rem;
     }
 
     .product-info {
@@ -191,13 +187,6 @@
       margin-bottom: 12px;
     }
 
-    .original-price {
-      font-size: 0.9rem;
-      color: #999;
-      text-decoration: line-through;
-      margin-right: 8px;
-    }
-
     .order-btn {
       background: var(--primary);
       color: white;
@@ -213,6 +202,35 @@
 
     .order-btn:hover {
       background: #c1121f;
+    }
+
+    /* PAGINATION BUTTONS */
+    .pagination-controls {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px 0 40px;
+    }
+
+    .pagination-btn {
+      background: var(--bg);
+      border: 2px solid var(--border);
+      color: var(--text);
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .pagination-btn:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .pagination-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
 
     /* BOTTOM NAV */
@@ -255,6 +273,13 @@
       color: #999;
       font-size: 1.1rem;
     }
+
+    .error {
+      text-align: center;
+      padding: 40px;
+      color: var(--primary);
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
@@ -280,66 +305,18 @@
 
   <!-- PRODUCT GRID -->
   <div class="container">
-    <h2 class="section-title">🔥 Menu Populer</h2>
-    <div class="product-grid">
-      <!-- Produk 1 -->
-      <div class="product-card">
-        <img src="https://via.placeholder.com/600x400?text=Udang+Bakar+Mie" alt="Udang Bakar Mie" class="product-image">
-        <div class="product-badge">🔥 POPULER</div>
-        <div class="product-info">
-          <div class="product-name">Udang Bakar Mie</div>
-          <div class="product-rating">
-            <span class="star">⭐</span>
-            <span class="star">⭐</span>
-            <span class="star">⭐</span>
-            <span class="star">⭐</span>
-            <span class="star">⭐</span>
-            <span class="rating-text">(128 ulasan)</span>
-          </div>
-          <div class="product-price">Rp 55.000</div>
-          <button class="order-btn">🛒 Pesan Sekarang</button>
-        </div>
-      </div>
+    <div class="section-title">
+      <span>🔥 Menu Populer</span>
+      <span class="pagination" id="pagination-text">Halaman 1</span>
+    </div>
+    <div id="menu-container" class="product-grid">
+      <div class="loading">Loading menu...</div>
+    </div>
 
-      <!-- Produk 2 -->
-      <div class="product-card">
-        <img src="https://via.placeholder.com/600x400?text=Kepiting+Saus+Padang" alt="Kepiting Saus Padang" class="product-image">
-        <div class="product-badge">🌶️ PEDAS</div>
-        <div class="product-info">
-          <div class="product-name">Kepiting Saus Padang</div>
-          <div class="product-rating">
-            <span class="star">⭐</span>
-            <span class="star">⭐</span>
-            <span class="star">⭐</span>
-            <span class="star">⭐</span>
-            <span class="star">⭐</span>
-            <span class="rating-text">(96 ulasan)</span>
-          </div>
-          <div class="product-price">Rp 120.000</div>
-          <button class="order-btn">🛒 Pesan Sekarang</button>
-        </div>
-      </div>
-
-      <!-- Produk 3 -->
-      <div class="product-card">
-        <img src="https://via.placeholder.com/600x400?text=Cumi+Goreng+Tepung" alt="Cumi Goreng Tepung" class="product-image">
-        <div class="product-info">
-          <div class="product-name">Cumi Goreng Tepung</div>
-          <div class="product-rating">
-            <span class="star">⭐</span>
-            <span class="star">⭐</span>
-            <span class="star">⭐</span>
-            <span class="star">⭐</span>
-            <span class="star">⭐</span>
-            <span class="rating-text">(84 ulasan)</span>
-          </div>
-          <div class="product-price">
-            <span class="original-price">Rp 50.000</span>
-            <span>Rp 45.000</span>
-          </div>
-          <button class="order-btn">🛒 Pesan Sekarang</button>
-        </div>
-      </div>
+    <!-- PAGINATION BUTTONS -->
+    <div class="pagination-controls">
+      <button id="prev-btn" class="pagination-btn" disabled>⬅️ Sebelumnya</button>
+      <button id="next-btn" class="pagination-btn">Selanjutnya ➡️</button>
     </div>
   </div>
 
@@ -367,5 +344,96 @@
     </div>
   </div>
 
+  <script>
+    const SHEET_URL = 'https://script.google.com/macros/s/AKfycby9ouMAhiw_hqP4OY8l4uIjzxsB8l6qNu_YJ9Ww8HZfptcAVaGz8kH-NsSCtKPi3R5xdQ/exec';
+    let allProducts = [];
+    let currentPage = 1;
+    const productsPerPage = 3;
+
+    async function loadMenu() {
+      const container = document.getElementById('menu-container');
+      const paginationText = document.getElementById('pagination-text');
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+
+      try {
+        const response = await fetch(SHEET_URL);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        allProducts = await response.json();
+        container.innerHTML = '';
+
+        if (!allProducts || allProducts.length === 0) {
+          container.innerHTML = '<p class="error">Belum ada menu tersedia.</p>';
+          return;
+        }
+
+        // Tampilkan halaman pertama
+        displayPage(currentPage);
+
+        // Event listener untuk tombol pagination
+        prevBtn.addEventListener('click', () => {
+          if (currentPage > 1) {
+            currentPage--;
+            displayPage(currentPage);
+          }
+        });
+
+        nextBtn.addEventListener('click', () => {
+          const totalPages = Math.ceil(allProducts.length / productsPerPage);
+          if (currentPage < totalPages) {
+            currentPage++;
+            displayPage(currentPage);
+          }
+        });
+
+      } catch (error) {
+        console.error("Error:", error);
+        container.innerHTML = `<p class="error">❌ Gagal memuat menu: ${error.message}</p>`;
+      }
+    }
+
+    function displayPage(page) {
+      const container = document.getElementById('menu-container');
+      const paginationText = document.getElementById('pagination-text');
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+
+      const startIndex = (page - 1) * productsPerPage;
+      const endIndex = startIndex + productsPerPage;
+      const productsToShow = allProducts.slice(startIndex, endIndex);
+
+      container.innerHTML = '';
+
+      productsToShow.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <img src="${item['Gambar (URL)'] || 'https://via.placeholder.com/600x400?text=No+Image'}" alt="${item['Nama Produk']}" class="product-image">
+          <div class="product-info">
+            <div class="product-name">${item['Nama Produk']}</div>
+            <div class="product-rating">
+              <span class="star">⭐</span>
+              <span class="star">⭐</span>
+              <span class="star">⭐</span>
+              <span class="star">⭐</span>
+              <span class="star">⭐</span>
+              <span class="rating-text">(128 ulasan)</span>
+            </div>
+            <div class="product-price">Rp ${Number(item['Harga']).toLocaleString('id-ID')}</div>
+            <a href="https://wa.me/6281234567890?text=Saya%20ingin%20pesan%20${encodeURIComponent(item['Nama Produk'])}" class="order-btn" target="_blank">🛒 Pesan Sekarang</a>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      // Update pagination UI
+      paginationText.textContent = `Halaman ${page}`;
+      prevBtn.disabled = page === 1;
+      nextBtn.disabled = endIndex >= allProducts.length;
+    }
+
+    window.addEventListener('DOMContentLoaded', loadMenu);
+  </script>
 </body>
 </html>
