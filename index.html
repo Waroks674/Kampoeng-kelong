@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kampoeng Kelongs - Seafood Segar</title>
+  <title>Kampoeng Kelongs - Seafood Delivery</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #1a1a1a;
-      --bg: #fafafa;
-      --accent: #e63946;
-      --border: #e9e9e9;
+      --primary: #e63946;
+      --secondary: #f72585;
+      --bg: #ffffff;
+      --text: #1c1c1e;
       --card-bg: #ffffff;
-      --text: #333333;
-      --text-light: #777777;
+      --border: #f0f0f0;
+      --gold: #ffd700;
     }
 
     * {
@@ -25,811 +25,347 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Poppins', sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
+      position: relative;
+      padding-bottom: 70px;
     }
 
-    /* HEADER */
-    header {
-      background: var(--card-bg);
-      padding: 24px 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    /* HEADER GRADIENT */
+    .header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      padding: 24px 16px 16px;
       position: sticky;
       top: 0;
       z-index: 100;
     }
 
-    .logo {
-      font-size: 1.8rem;
+    .header-title {
+      color: white;
+      font-size: 1.5rem;
       font-weight: 700;
-      color: var(--primary);
-      text-decoration: none;
+      margin-bottom: 16px;
       letter-spacing: -0.5px;
     }
 
-    .nav-links {
+    .search-bar {
       display: flex;
       align-items: center;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50px;
+      padding: 12px 20px;
+      backdrop-filter: blur(10px);
     }
 
-    .nav-links a {
-      margin-left: 28px;
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 500;
+    .search-bar input {
+      flex: 1;
       font-size: 0.95rem;
-      transition: color 0.2s;
-      position: relative;
-    }
-
-    .nav-links a:hover {
-      color: var(--accent);
-    }
-
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -6px;
-      width: 0;
-      height: 2px;
-      background: var(--accent);
-      transition: width 0.3s;
-    }
-
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-
-    .whatsapp-btn {
-      background: var(--accent);
+      border: none;
+      outline: none;
+      background: transparent;
       color: white;
-      padding: 10px 20px;
-      border-radius: 30px;
-      text-decoration: none;
+      margin-left: 8px;
+    }
+
+    .search-icon {
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    /* CATEGORIES */
+    .categories {
+      padding: 20px 16px;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+
+    .categories::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category {
+      display: inline-block;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 50px;
+      padding: 12px 24px;
+      margin-right: 12px;
       font-weight: 600;
       font-size: 0.9rem;
-      margin-left: 28px;
-      transition: background 0.2s;
+      transition: all 0.2s;
     }
 
-    .whatsapp-btn:hover {
-      background: #c1121f;
+    .category.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
     }
 
-    /* HERO */
-    .hero {
-      padding: 80px 5% 60px;
-      text-align: center;
-      background: linear-gradient(135deg, rgba(250,250,250,1) 0%, rgba(240,240,240,1) 100%);
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      margin-bottom: 16px;
-      color: var(--primary);
-      letter-spacing: -1px;
-    }
-
-    .hero p {
-      color: var(--text-light);
-      max-width: 600px;
-      margin: 0 auto;
-      font-size: 1.1rem;
-    }
-
-    /* MENU GRID */
+    /* PRODUCT GRID */
     .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
+      max-width: 100%;
+      padding: 0 16px;
     }
 
     .section-title {
-      text-align: center;
-      font-size: 2rem;
+      font-size: 1.3rem;
       font-weight: 700;
-      margin: 60px 0 40px;
-      color: var(--primary);
+      margin: 24px 0 16px;
+      color: var(--text);
     }
 
-    .menu-grid {
+    .product-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 32px;
+      grid-template-columns: 1fr;
+      gap: 20px;
       margin-bottom: 80px;
     }
 
-    .menu-card {
+    .product-card {
       background: var(--card-bg);
       border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
       transition: all 0.3s ease;
+      position: relative;
     }
 
-    .menu-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
     }
 
-    .menu-card img {
+    .product-image {
       width: 100%;
-      height: 240px;
+      height: 200px;
       object-fit: cover;
       display: block;
     }
 
-    .menu-info {
-      padding: 24px;
+    .product-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: var(--gold);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.8rem;
     }
 
-    .menu-category {
-      font-size: 0.8rem;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
+    .product-info {
+      padding: 20px;
+    }
+
+    .product-name {
+      font-size: 1.1rem;
       font-weight: 600;
       margin-bottom: 8px;
-    }
-
-    .menu-name {
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-      color: var(--primary);
       line-height: 1.3;
     }
 
-    .menu-desc {
-      font-size: 0.95rem;
-      color: var(--text-light);
-      margin-bottom: 16px;
-      line-height: 1.6;
+    .product-rating {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
     }
 
-    .menu-price {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: var(--accent);
+    .star {
+      color: var(--gold);
+      font-size: 1rem;
     }
 
-    .loading {
-      text-align: center;
-      padding: 100px 0;
-      color: var(--text-light);
-      font-size: 1.2rem;
+    .rating-text {
+      font-size: 0.85rem;
+      color: #999;
+      margin-left: 6px;
     }
 
-    .error {
-      text-align: center;
-      padding: 60px 0;
-      color: var(--accent);
-      font-weight: 600;
-      font-size: 1.1rem;
+    .product-price {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
     }
 
-    /* FOOTER */
-    footer {
+    .original-price {
+      font-size: 0.9rem;
+      color: #999;
+      text-decoration: line-through;
+      margin-right: 8px;
+    }
+
+    .order-btn {
       background: var(--primary);
       color: white;
-      padding: 80px 5% 40px;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 40px;
-      margin-bottom: 40px;
-    }
-
-    .footer-col h3 {
-      font-size: 1.3rem;
-      margin-bottom: 20px;
-      position: relative;
-      padding-bottom: 10px;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 12px;
       font-weight: 600;
-    }
-
-    .footer-col h3::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 50px;
-      height: 3px;
-      background: var(--accent);
-    }
-
-    .footer-col p, .footer-col a {
-      color: #cccccc;
-      margin-bottom: 12px;
-      display: block;
-      text-decoration: none;
       font-size: 0.95rem;
-    }
-
-    .footer-col a:hover {
-      color: var(--accent);
-    }
-
-    .social-links {
-      display: flex;
-      gap: 16px;
-      margin-top: 16px;
-    }
-
-    .social-links a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 50%;
-      color: white;
-      text-decoration: none;
+      cursor: pointer;
       transition: background 0.2s;
+      width: 100%;
     }
 
-    .social-links a:hover {
-      background: var(--accent);
+    .order-btn:hover {
+      background: #c1121f;
     }
 
-    .copyright {
+    /* BOTTOM NAV */
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      background: white;
+      padding: 16px 0;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+      z-index: 99;
+    }
+
+    .nav-item {
       text-align: center;
-      padding-top: 30px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      color: #999999;
-      font-size: 0.9rem;
+      font-size: 0.75rem;
+      color: #999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    /* MOBILE */
-    @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2.3rem;
-      }
-      .menu-grid {
-        grid-template-columns: 1fr;
-      }
-      header {
-        flex-direction: column;
-        padding: 20px;
-      }
-      .nav-links {
-        margin-top: 16px;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .nav-links a {
-        margin: 8px 12px;
-      }
-      .whatsapp-btn {
-        margin: 16px 0 0;
-      }
+    .nav-item.active {
+      color: var(--primary);
+    }
+
+    .nav-icon {
+      margin-bottom: 4px;
+      font-size: 1.4rem;
+    }
+
+    /* LOADING */
+    .loading {
+      text-align: center;
+      padding: 60px 0;
+      color: #999;
+      font-size: 1.1rem;
     }
   </style>
 </head>
 <body>
 
   <!-- HEADER -->
-  <header>
-    <a href="#" class="logo">🦀 Kampoeng Kelongs</a>
-    <div class="nav-links">
-      <a href="#">Home</a>
-      <a href="#">Menu</a>
-      <a href="#">About</a>
-      <a href="https://wa.me/6281234567890" class="whatsapp-btn">📱 WhatsApp</a>
+  <div class="header">
+    <div class="header-title">🦀 Kampoeng Kelongs</div>
+    <div class="search-bar">
+      <div class="search-icon">🔍</div>
+      <input type="text" placeholder="Cari seafood favoritmu..." />
     </div>
-  </header>
-
-  <!-- HERO -->
-  <div class="hero">
-    <h1>Seafood Segar, Rasa Mantap</h1>
-    <p>Nikmati hidangan laut terbaik kami, diperbarui otomatis dari dapur ke meja Anda.</p>
   </div>
 
-  <!-- MENU -->
+  <!-- CATEGORIES -->
+  <div class="categories">
+    <div class="category active">Semua</div>
+    <div class="category">Udang</div>
+    <div class="category">Kepiting</div>
+    <div class="category">Cumi</div>
+    <div class="category">Ikan</div>
+    <div class="category">Sup</div>
+  </div>
+
+  <!-- PRODUCT GRID -->
   <div class="container">
-    <h2 class="section-title">🍽️ Menu Favorit Kami</h2>
-    <div id="menu-container" class="menu-grid">
-      <div class="loading">Loading menu...</div>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-grid">
-      <div class="footer-col">
-        <h3>Temukan Kami</h3>
-        <p>📍 Jl. Pantai Indah No. 123</p>
-        <p>🌊 Kota Laut, 12345</p>
-        <p>🕒 Setiap Hari: 10.00 - 22.00</p>
-      </div>
-      <div class="footer-col">
-        <h3>Hubungi Kami</h3>
-        <a href="https://wa.me/6281234567890">📱 WhatsApp: 0812-3456-7890</a>
-        <a href="mailto:info@kampoengkelongs.com">✉️ info@kampoengkelongs.com</a>
-        <div class="social-links">
-          <a href="#">📱</a>
-          <a href="#">📘</a>
-          <a href="#">📸</a>
+    <h2 class="section-title">🔥 Menu Populer</h2>
+    <div class="product-grid">
+      <!-- Produk 1 -->
+      <div class="product-card">
+        <img src="https://via.placeholder.com/600x400?text=Udang+Bakar+Mie" alt="Udang Bakar Mie" class="product-image">
+        <div class="product-badge">🔥 POPULER</div>
+        <div class="product-info">
+          <div class="product-name">Udang Bakar Mie</div>
+          <div class="product-rating">
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="rating-text">(128 ulasan)</span>
+          </div>
+          <div class="product-price">Rp 55.000</div>
+          <button class="order-btn">🛒 Pesan Sekarang</button>
         </div>
       </div>
-      <div class="footer-col">
-        <h3>Tentang Kami</h3>
-        <p>Kampoeng Kelongs menyajikan seafood segar langsung dari nelayan lokal. Setiap hidangan dibuat dengan cinta dan bumbu rahasia keluarga.</p>
-      </div>
-    </div>
-    <div class="copyright">
-      &copy; 2025 Kampoeng Kelongs. All rights reserved.
-    </div>
-  </footer>
 
-  <script>
-    // 🔑 URL Web App kamu
-    const SHEET_URL = 'https://script.google.com/macros/s/AKfycby9ouMAhiw_hqP4OY8l4uIjzxsB8l6qNu_YJ9Ww8HZfptcAVaGz8kH-NsSCtKPi3R5xdQ/exec';
-
-    async function loadMenu() {
-      const container = document.getElementById('menu-container');
-
-      try {
-        const response = await fetch(SHEET_URL);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-        const data = await response.json();
-        container.innerHTML = '';
-
-        if (!data || data.length === 0) {
-          container.innerHTML = '<p class="error">Belum ada menu tersedia.</p>';
-          return;
-        }
-
-        data.forEach(item => {
-          const card = document.createElement('div');
-          card.className = 'menu-card';
-          card.innerHTML = `
-            <img src="${item['Gambar (URL)'] || 'https://via.placeholder.com/600x400?text=No+Image'}" alt="${item['Nama Produk']}">
-            <div class="menu-info">
-              <div class="menu-category">${item['Kategori'] || 'Seafood'}</div>
-              <h3 class="menu-name">${item['Nama Produk']}</h3>
-              <p class="menu-desc">${item['Deskripsi'] || 'Deskripsi tidak tersedia.'}</p>
-              <p class="menu-price">Rp ${Number(item['Harga']).toLocaleString('id-ID')}</p>
-            </div>
-          `;
-          container.appendChild(card);
-        });
-
-      } catch (error) {
-        console.error("Error:", error);
-        container.innerHTML = `<p class="error">❌ Gagal memuat menu: ${error.message}</p>`;
-      }
-    }
-
-    window.addEventListener('DOMContentLoaded', loadMenu);
-  </script>
-</body>
-</html> <!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kampoeng Kelongs - Seafood Segar</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #1a1a1a;
-      --bg: #fafafa;
-      --accent: #e63946;
-      --border: #e9e9e9;
-      --card-bg: #ffffff;
-      --text: #333333;
-      --text-light: #777777;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    /* HEADER */
-    header {
-      background: var(--card-bg);
-      padding: 24px 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .logo {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--primary);
-      text-decoration: none;
-      letter-spacing: -0.5px;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-    }
-
-    .nav-links a {
-      margin-left: 28px;
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 500;
-      font-size: 0.95rem;
-      transition: color 0.2s;
-      position: relative;
-    }
-
-    .nav-links a:hover {
-      color: var(--accent);
-    }
-
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -6px;
-      width: 0;
-      height: 2px;
-      background: var(--accent);
-      transition: width 0.3s;
-    }
-
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-
-    .whatsapp-btn {
-      background: var(--accent);
-      color: white;
-      padding: 10px 20px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
-      margin-left: 28px;
-      transition: background 0.2s;
-    }
-
-    .whatsapp-btn:hover {
-      background: #c1121f;
-    }
-
-    /* HERO */
-    .hero {
-      padding: 80px 5% 60px;
-      text-align: center;
-      background: linear-gradient(135deg, rgba(250,250,250,1) 0%, rgba(240,240,240,1) 100%);
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      margin-bottom: 16px;
-      color: var(--primary);
-      letter-spacing: -1px;
-    }
-
-    .hero p {
-      color: var(--text-light);
-      max-width: 600px;
-      margin: 0 auto;
-      font-size: 1.1rem;
-    }
-
-    /* MENU GRID */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 2rem;
-      font-weight: 700;
-      margin: 60px 0 40px;
-      color: var(--primary);
-    }
-
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 32px;
-      margin-bottom: 80px;
-    }
-
-    .menu-card {
-      background: var(--card-bg);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-      transition: all 0.3s ease;
-    }
-
-    .menu-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-    }
-
-    .menu-card img {
-      width: 100%;
-      height: 240px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .menu-info {
-      padding: 24px;
-    }
-
-    .menu-category {
-      font-size: 0.8rem;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .menu-name {
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-      color: var(--primary);
-      line-height: 1.3;
-    }
-
-    .menu-desc {
-      font-size: 0.95rem;
-      color: var(--text-light);
-      margin-bottom: 16px;
-      line-height: 1.6;
-    }
-
-    .menu-price {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: var(--accent);
-    }
-
-    .loading {
-      text-align: center;
-      padding: 100px 0;
-      color: var(--text-light);
-      font-size: 1.2rem;
-    }
-
-    .error {
-      text-align: center;
-      padding: 60px 0;
-      color: var(--accent);
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
-
-    /* FOOTER */
-    footer {
-      background: var(--primary);
-      color: white;
-      padding: 80px 5% 40px;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 40px;
-      margin-bottom: 40px;
-    }
-
-    .footer-col h3 {
-      font-size: 1.3rem;
-      margin-bottom: 20px;
-      position: relative;
-      padding-bottom: 10px;
-      font-weight: 600;
-    }
-
-    .footer-col h3::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 50px;
-      height: 3px;
-      background: var(--accent);
-    }
-
-    .footer-col p, .footer-col a {
-      color: #cccccc;
-      margin-bottom: 12px;
-      display: block;
-      text-decoration: none;
-      font-size: 0.95rem;
-    }
-
-    .footer-col a:hover {
-      color: var(--accent);
-    }
-
-    .social-links {
-      display: flex;
-      gap: 16px;
-      margin-top: 16px;
-    }
-
-    .social-links a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 50%;
-      color: white;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-
-    .social-links a:hover {
-      background: var(--accent);
-    }
-
-    .copyright {
-      text-align: center;
-      padding-top: 30px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      color: #999999;
-      font-size: 0.9rem;
-    }
-
-    /* MOBILE */
-    @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2.3rem;
-      }
-      .menu-grid {
-        grid-template-columns: 1fr;
-      }
-      header {
-        flex-direction: column;
-        padding: 20px;
-      }
-      .nav-links {
-        margin-top: 16px;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .nav-links a {
-        margin: 8px 12px;
-      }
-      .whatsapp-btn {
-        margin: 16px 0 0;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- HEADER -->
-  <header>
-    <a href="#" class="logo">🦀 Kampoeng Kelongs</a>
-    <div class="nav-links">
-      <a href="#">Home</a>
-      <a href="#">Menu</a>
-      <a href="#">About</a>
-      <a href="https://wa.me/6281234567890" class="whatsapp-btn">📱 WhatsApp</a>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <div class="hero">
-    <h1>Seafood Segar, Rasa Mantap</h1>
-    <p>Nikmati hidangan laut terbaik kami, diperbarui otomatis dari dapur ke meja Anda.</p>
-  </div>
-
-  <!-- MENU -->
-  <div class="container">
-    <h2 class="section-title">🍽️ Menu Favorit Kami</h2>
-    <div id="menu-container" class="menu-grid">
-      <div class="loading">Loading menu...</div>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-grid">
-      <div class="footer-col">
-        <h3>Temukan Kami</h3>
-        <p>📍 Jl. Pantai Indah No. 123</p>
-        <p>🌊 Kota Laut, 12345</p>
-        <p>🕒 Setiap Hari: 10.00 - 22.00</p>
-      </div>
-      <div class="footer-col">
-        <h3>Hubungi Kami</h3>
-        <a href="https://wa.me/6281234567890">📱 WhatsApp: 0812-3456-7890</a>
-        <a href="mailto:info@kampoengkelongs.com">✉️ info@kampoengkelongs.com</a>
-        <div class="social-links">
-          <a href="#">📱</a>
-          <a href="#">📘</a>
-          <a href="#">📸</a>
+      <!-- Produk 2 -->
+      <div class="product-card">
+        <img src="https://via.placeholder.com/600x400?text=Kepiting+Saus+Padang" alt="Kepiting Saus Padang" class="product-image">
+        <div class="product-badge">🌶️ PEDAS</div>
+        <div class="product-info">
+          <div class="product-name">Kepiting Saus Padang</div>
+          <div class="product-rating">
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="rating-text">(96 ulasan)</span>
+          </div>
+          <div class="product-price">Rp 120.000</div>
+          <button class="order-btn">🛒 Pesan Sekarang</button>
         </div>
       </div>
-      <div class="footer-col">
-        <h3>Tentang Kami</h3>
-        <p>Kampoeng Kelongs menyajikan seafood segar langsung dari nelayan lokal. Setiap hidangan dibuat dengan cinta dan bumbu rahasia keluarga.</p>
+
+      <!-- Produk 3 -->
+      <div class="product-card">
+        <img src="https://via.placeholder.com/600x400?text=Cumi+Goreng+Tepung" alt="Cumi Goreng Tepung" class="product-image">
+        <div class="product-info">
+          <div class="product-name">Cumi Goreng Tepung</div>
+          <div class="product-rating">
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="rating-text">(84 ulasan)</span>
+          </div>
+          <div class="product-price">
+            <span class="original-price">Rp 50.000</span>
+            <span>Rp 45.000</span>
+          </div>
+          <button class="order-btn">🛒 Pesan Sekarang</button>
+        </div>
       </div>
     </div>
-    <div class="copyright">
-      &copy; 2025 Kampoeng Kelongs. All rights reserved.
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <div class="nav-item active">
+      <div class="nav-icon">🏠</div>
+      <div>Beranda</div>
     </div>
-  </footer>
+    <div class="nav-item">
+      <div class="nav-icon">❤️</div>
+      <div>Favorit</div>
+    </div>
+    <div class="nav-item">
+      <div class="nav-icon">🛒</div>
+      <div>Keranjang</div>
+    </div>
+    <div class="nav-item">
+      <div class="nav-icon">🔔</div>
+      <div>Notifikasi</div>
+    </div>
+    <div class="nav-item">
+      <div class="nav-icon">👤</div>
+      <div>Akun</div>
+    </div>
+  </div>
 
-  <script>
-    // 🔑 URL Web App kamu
-    const SHEET_URL = 'https://script.google.com/macros/s/AKfycby9ouMAhiw_hqP4OY8l4uIjzxsB8l6qNu_YJ9Ww8HZfptcAVaGz8kH-NsSCtKPi3R5xdQ/exec';
-
-    async function loadMenu() {
-      const container = document.getElementById('menu-container');
-
-      try {
-        const response = await fetch(SHEET_URL);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-        const data = await response.json();
-        container.innerHTML = '';
-
-        if (!data || data.length === 0) {
-          container.innerHTML = '<p class="error">Belum ada menu tersedia.</p>';
-          return;
-        }
-
-        data.forEach(item => {
-          const card = document.createElement('div');
-          card.className = 'menu-card';
-          card.innerHTML = `
-            <img src="${item['Gambar (URL)'] || 'https://via.placeholder.com/600x400?text=No+Image'}" alt="${item['Nama Produk']}">
-            <div class="menu-info">
-              <div class="menu-category">${item['Kategori'] || 'Seafood'}</div>
-              <h3 class="menu-name">${item['Nama Produk']}</h3>
-              <p class="menu-desc">${item['Deskripsi'] || 'Deskripsi tidak tersedia.'}</p>
-              <p class="menu-price">Rp ${Number(item['Harga']).toLocaleString('id-ID')}</p>
-            </div>
-          `;
-          container.appendChild(card);
-        });
-
-      } catch (error) {
-        console.error("Error:", error);
-        container.innerHTML = `<p class="error">❌ Gagal memuat menu: ${error.message}</p>`;
-      }
-    }
-
-    window.addEventListener('DOMContentLoaded', loadMenu);
-  </script>
 </body>
 </html>
