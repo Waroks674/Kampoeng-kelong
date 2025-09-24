@@ -30,9 +30,29 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.5;
-      margin-bottom: 60px; /* Space for bottom navbar */
+      margin-bottom: 60px;
+      padding-top: 60px; /* Space for bottom navbar */
       transition: background 0.3s, color 0.3s;
     }
+
+    /* --- Kode CSS Header yang ditambahkan --- */
+    .header-class {
+        background-color: var(--primary);
+        padding: 10px 0;
+        color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        text-align: center;
+    }
+
+    .header-class h1 {
+        margin: 0;
+        font-size: 1.5rem;
+    }
+    /* --- Akhir kode CSS Header --- */
 
     .product-detail {
       background: var(--card-bg);
@@ -116,6 +136,11 @@
   </style>
 </head>
 <body>
+  <header class="header-class">
+      <div class="container">
+          <h1>Detail Menu</h1>
+      </div>
+  </header>
   <div class="container my-3">
     <div class="product-detail card mb-4">
       <img id="product-image" src="" class="card-img-top product-image" alt="">
@@ -180,7 +205,7 @@
 
   <footer>
     <div class="container">
-      <p>&copy; 2025 waroksungo. Hubungi: <a href="https://wa.me/6283807602549?text=Halo,%20ada%20pertanyaan?" class="text-decoration-none">WhatsApp</a> / Ikuti: <a href="https://x.com/kampoengkelongs" class="text-decoration-none">@kampoengkelongs</a></p>
+      <p>&copy; 2025 Kampoeng Kelongs. Hubungi: <a href="https://wa.me/6281234567890" class="text-decoration-none">WhatsApp</a> | Ikuti: <a href="https://x.com/kampoengkelongs" class="text-decoration-none">@kampoengkelongs</a></p>
     </div>
   </footer>
 
@@ -207,7 +232,7 @@
     document.getElementById('product-desc').textContent = currentProduct.deskripsi;
     
     // Tombol WhatsApp "Pesan Sekarang"
-    document.getElementById('order-btn').href = `https://wa.me/6283807602549?text=Saya%20ingin%20pesan%20${encodeURIComponent(currentProduct.nama)}`;
+    document.getElementById('order-btn').href = `https://wa.me/6281234567890?text=Saya%20ingin%20pesan%20${encodeURIComponent(currentProduct.nama)}`;
 
     // Tombol "Tambah ke Keranjang"
     document.getElementById('add-cart-btn').addEventListener('click', () => {
@@ -220,7 +245,7 @@
       if (navigator.share) {
         navigator.share({
           title: currentProduct.nama,
-          text: `Cek ${currentProduct.nama} di Kampoeng Kelong! ${currentProduct.deskripsi.substring(0, 100)}...`,
+          text: `Cek ${currentProduct.nama} di Kampoeng Kelongs! ${currentProduct.deskripsi.substring(0, 100)}...`,
           url: window.location.href
         }).catch(error => console.error('Error sharing:', error));
       } else {
@@ -362,7 +387,7 @@
       whatsappText += `\nTotal: Rp ${total.toLocaleString('id-ID')}`;
       
       document.getElementById('cart-total').textContent = total.toLocaleString('id-ID');
-      document.getElementById('checkout-btn').href = `https://wa.me/6283807602549?text=${encodeURIComponent(whatsappText)}`;
+      document.getElementById('checkout-btn').href = `https://wa.me/6281234567890?text=${encodeURIComponent(whatsappText)}`;
       
       document.querySelectorAll('.remove-item').forEach(btn => {
         btn.addEventListener('click', (e) => {
